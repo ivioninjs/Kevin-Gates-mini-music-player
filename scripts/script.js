@@ -115,7 +115,7 @@ new Vue({
       }
     },
     generateTime() {
-      let width = (100 / this.audio.duration) * this.audio.currentTime;
+      let width = (100 / this.audio.duration) * this.audio.currentTime; //сколько прошло времени в процентах
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
       let durmin = Math.floor(this.audio.duration / 60);
@@ -204,12 +204,16 @@ new Vue({
     this.currentTrack = this.tracks[0];
     this.audio = new Audio();
     this.audio.src = this.currentTrack.source;
+    
+    // The timeupdate event is fired when the time indicated by the currentTime attribute has been updated.
     this.audio.ontimeupdate = function() {
       vm.generateTime();
     };
-    this.audio.onloadedmetadata = function() {
+//     The onloadedmetadata event occurs when meta data for the specified audio/video has been loaded.
+    this.audio.onloadedmetadata = function() { // this = Audio Object
       vm.generateTime();
     };
+//     The onended event occurs when the audio/video has reached the end.
     this.audio.onended = function() {
       vm.nextTrack();
       this.isTimerPlaying = true;
